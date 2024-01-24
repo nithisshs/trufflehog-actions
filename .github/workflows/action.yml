@@ -20,7 +20,7 @@ jobs:
 
       - name: Running a secret scanner on the remote URL
         run: | 
-          trufflehog git {{inputs.repo}} --issue-comments --pr-comments --only-verified --json > output.json
+          trufflehog git {{inputs.repo}}  --only-verified --json > output.json
       
       - name: Uploading the output
         uses: actions/upload-artifact@v3
