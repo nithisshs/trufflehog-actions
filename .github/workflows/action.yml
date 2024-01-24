@@ -17,12 +17,19 @@ jobs:
           wget -q https://github.com/trufflesecurity/trufflehog/releases/download/v3.64.0/trufflehog_3.64.0_linux_amd64.tar.gz -O trufflehog.tar.gz
           sudo tar xzf trufflehog.tar.gz --directory=/usr/local/bin/ trufflehog
 
-      - name: Running a secret scanner on the remote URL
+      - name: Running a secret scanner on the remote URL for unverified keys
         run: | 
-          trufflehog git ${{ github.event.inputs.repo-url }}  --only-verified --json | tee output.json
+          trufflehog git ${{ github.event.inputs.repo-url }}  --json | tee unverified-keys.json
+          
+      - name: Running a secret scanner on the remote URL for unverified keys
+        run: | 
+          trufflehog git ${{ github.event.inputs.repo-url }} --only-verified --json | tee verified-keys.json
       
       - name: Uploading the output
         uses: actions/upload-artifact@v3
         with:
           name: output-download
-          path: output.json
+          path: |
+            - verified-keys.json
+            - unverified-keys.json
+      
