@@ -1,0 +1,29 @@
+name: TruffleHog Secrets Scan
+on:
+  workflow_dispatch:
+    inputs:
+      repo:
+        required: true
+        type: string
+        default: https://github.com/<repo>
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install TruffleHog
+        run: |
+          wget -q https://github.com/trufflesecurity/trufflehog/releases/download/v3.64.0/trufflehog_3.64.0_linux_amd64.tar.gz -O trufflehog.tar.gz
+          sudo tar xzf trufflehog.tar.gz --directory=/usr/local/bin/ trufflehog
+
+      - name: Running a secret scanner on the remote URL
+        run: | 
+          trufflehog git {{inputs.repo}} --issue-comments --pr-comments --only-verified --json > output.json
+      
+      - name: Uploading the output
+        uses: actions/upload-artifact@v3
+        with:
+          name: output-download
+          path: output.json
