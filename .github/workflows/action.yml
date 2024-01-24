@@ -30,6 +30,6 @@ jobs:
         with:
           name: output-download
           path: |
-            - verified-keys.json
-            - unverified-keys.json
+             verified-keys.json
+             unverified-keys.json
       
