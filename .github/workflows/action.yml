@@ -2,9 +2,8 @@ name: TruffleHog Secrets Scan
 on:
   workflow_dispatch:
     inputs:
-      repo:
+      repo-url:
         required: true
-        type: string
         default: https://github.com/<repo>
   
 jobs:
@@ -20,7 +19,7 @@ jobs:
 
       - name: Running a secret scanner on the remote URL
         run: | 
-          trufflehog git {{inputs.repo}}  --only-verified --json > output.json
+          trufflehog git ${{ github.event.inputs.repo-url }}  --only-verified --json > output.json
       
       - name: Uploading the output
         uses: actions/upload-artifact@v3
