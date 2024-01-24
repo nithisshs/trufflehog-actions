@@ -21,7 +21,7 @@ jobs:
         run: | 
           trufflehog git ${{ github.event.inputs.repo-url }}  --json | tee unverified-keys.json
           
-      - name: Running a secret scanner on the remote URL for unverified keys
+      - name: Running a secret scanner on the remote URL for verified keys
         run: | 
           trufflehog git ${{ github.event.inputs.repo-url }} --only-verified --json | tee verified-keys.json
       
