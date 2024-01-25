@@ -40,5 +40,5 @@ jobs:
       - name: Upload Excel File
         uses: actions/upload-artifact@v3
         with:
-          name: trufflehog-results
-          path: trufflehog-results.xlsx
+          name: secret-scanner-results
+          path: secret-scanner-esults.xlsx
