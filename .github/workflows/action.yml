@@ -21,24 +21,14 @@ jobs:
 
       - name: Scan for Unverified and Verified Keys
         run: |
-          trufflehog git ${{ github.event.inputs.repo-url }} --json | tee all-keys.json
-          trufflehog git ${{ github.event.inputs.repo-url }} --only-verified --json | tee verified-keys.json
+          trufflehog github --repo=${{ github.event.inputs.repo-url }} --json --issue-comments --pr-comments  | tee all-keys.json
+          trufflehog github --repo=${{ github.event.inputs.repo-url }} --issue-comments --pr-comments --only-verified --json | tee verified-keys.json
 
-      - name: Setup Python
-        uses: actions/setup-python@v3
-        with:
-          python-version: 3.9
-
-      - name: Install Dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install pandas openpyxl pyarrow
-
-      - name: Convert JSON to Excel
-        run: python convert_to_excel.py
 
       - name: Upload CSV File
         uses: actions/upload-artifact@v3
         with:
           name: secret-scanner-results
-          path: secret-scanner-esults.csv
+          path: |
+             all-keys.json
+             verified-keys.json
