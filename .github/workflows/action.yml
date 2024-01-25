@@ -37,8 +37,8 @@ jobs:
       - name: Convert JSON to Excel
         run: python convert_to_excel.py
 
-      - name: Upload Excel File
+      - name: Upload CSV File
         uses: actions/upload-artifact@v3
         with:
           name: secret-scanner-results
-          path: secret-scanner-esults.xlsx
+          path: secret-scanner-esults.csv
