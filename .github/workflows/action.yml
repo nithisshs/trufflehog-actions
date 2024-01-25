@@ -6,6 +6,7 @@ on:
       repo-url:
         required: true
         default: https://github.com/<repo>
+
   
 jobs:
   build:
@@ -14,6 +15,17 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
+      - name: 'Setup jq'
+        uses: dcarbone/install-jq-action@v2
+        with:
+          version: 1.7
+
+      - name: 'Check jq'
+        # language=sh
+        run: |
+          which jq
+          jq --version   
+
       - name: Install TruffleHog
         run: |
           wget -q https://github.com/trufflesecurity/trufflehog/releases/download/v3.64.0/trufflehog_3.64.0_linux_amd64.tar.gz -O trufflehog.tar.gz
@@ -21,8 +33,8 @@ jobs:
 
       - name: Scan for Unverified and Verified Keys
         run: |
-          trufflehog github --repo=${{ github.event.inputs.repo-url }} --json --issue-comments --pr-comments  | tee all-keys.json
-          trufflehog github --repo=${{ github.event.inputs.repo-url }} --issue-comments --pr-comments --only-verified --json | tee verified-keys.json
+          trufflehog github --repo=${{ github.event.inputs.repo-url }} --json --issue-comments --pr-comments | jq | tee all-keys.json
+          trufflehog github --repo=${{ github.event.inputs.repo-url }} --issue-comments --pr-comments --only-verified --json | jq | tee verified-keys.json
 
 
       - name: Upload CSV File
