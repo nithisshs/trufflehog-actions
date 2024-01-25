@@ -1,18 +1,11 @@
-import pandas as pd
-import json
-
-# Load JSON files
-with open('all-keys.json') as f:
-    all_keys_data = json.load(f)
-
-with open('verified-keys.json') as f:
-    verified_keys_data = json.load(f)
-
-# Convert to DataFrames
-all_keys_df = pd.json_normalize(all_keys_data)
-verified_keys_df = pd.json_normalize(verified_keys_data)
-
-# Save to Excel
-with pd.ExcelWriter('trufflehog-results.xlsx', engine='openpyxl') as writer:
-    all_keys_df.to_excel(writer, sheet_name='All_Keys', index=False)
-    verified_keys_df.to_excel(writer, sheet_name='Verified_Keys', index=False)
+import pandas as pd 
+import os 
+ 
+frame = pd.DataFrame() 
+for filename in os.listdir(os.getcwd()): 
+    root, ext = os.path.splitext(filename) 
+    if ext == '.json': 
+        tmp_frame = pd.read_json(filename) 
+        frame = frame.append(tmp_frame, ignore_index=True) 
+         
+frame.to_csv('secret-scanner-results.csv', index=False) 
