@@ -32,7 +32,7 @@ jobs:
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pandas openpyxl pyarrow
+          pip install pandas openpyxl pyarrow jsonlib
 
       - name: Convert JSON to Excel
         run: python convert_to_excel.py
