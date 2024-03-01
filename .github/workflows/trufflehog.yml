@@ -33,14 +33,5 @@ jobs:
 
       - name: Scan for Unverified and Verified Keys
         run: |
-          trufflehog github --repo=${{ github.event.inputs.repo-url }} --json --issue-comments --pr-comments | jq | tee all-keys.json
-          trufflehog github --repo=${{ github.event.inputs.repo-url }} --issue-comments --pr-comments --only-verified --json | jq | tee verified-keys.json
-
-
-      - name: Upload CSV File
-        uses: actions/upload-artifact@v3
-        with:
-          name: secret-scanner-results
-          path: |
-             all-keys.json
-             verified-keys.json
+          trufflehog github --repo=${{ github.event.inputs.repo-url }} --json --issue-comments --pr-comments --github-actions
+          trufflehog github --repo=${{ github.event.inputs.repo-url }} --issue-comments --pr-comments --only-verified --github-actions
