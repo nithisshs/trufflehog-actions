@@ -42,7 +42,7 @@ jobs:
 
       - name: Running Trufflehog and Getting results in a CSV format
         run: |
-          trufflehog github --repo=${{ github.event.inputs.repo-url }} --json --issue-comments --pr-comments --json | jq | tee results.json
+          trufflehog github --repo=${{ github.event.inputs.repo-url }} --issue-comments --pr-comments --json | jq | tee results.json
           python3 json2csv.py
 
       - name: Upload CSV File
