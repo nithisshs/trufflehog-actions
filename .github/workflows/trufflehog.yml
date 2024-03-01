@@ -33,7 +33,7 @@ jobs:
 
       - name: Installing dependencies for the python script
         run: | 
-           pip3 install json pandas 
+           pip3 install pandas 
     
       - name: Install TruffleHog
         run: |
