@@ -2,7 +2,7 @@ import json
 import csv
 
 # Load the JSON data
-with open("data.json", "r") as f:
+with open("results.json", "r") as f:
     data = json.load(f)
 
 # Extract relevant data
