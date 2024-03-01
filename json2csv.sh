@@ -4,7 +4,7 @@
 input_json="results.json"
 
 # Define output CSV file
-output_csv="secret-scan.csv"
+output_csv="secret-scan-results.csv"
 
 # Define headers
 headers="repo_name,link,commit,filename,Lines,Detector_type,verified_status,raw"
