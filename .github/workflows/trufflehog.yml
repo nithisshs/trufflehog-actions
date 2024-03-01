@@ -1,4 +1,4 @@
-name: TruffleHog Secrets Scan
+name: TruffleHog Single Repo Secrets Scanner
 
 on:
   workflow_dispatch:
