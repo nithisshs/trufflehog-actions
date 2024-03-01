@@ -9,8 +9,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      GITHUB_ACCESS_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v3
@@ -38,7 +36,7 @@ jobs:
     - name: Running TruffleHog and Getting results in a CSV format
       run: |
         trufflehog github \
-          --org=${{ github.event.inputs.org-name }} \
+          --org=${{ github.event.inputs.org-name }} --token=${{ secrets.GH_ACCESS_TOKEN }} \
           --issue-comments --pr-comments --only-verified --json | jq | tee results.json
         bash json2csv.sh
 
